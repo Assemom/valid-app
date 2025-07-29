@@ -1,0 +1,108 @@
+{
+  "info": {
+    "_postman_id": "b1e2c3d4-5678-1234-9abc-def012345678",
+    "name": "Valid App API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Collection for testing Valid App Node.js API endpoints."
+  },
+  "item": [
+    {
+      "name": "Create Program (POST)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"program_name\": \"Test Program\",\n  \"is_active\": true\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/programs",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "programs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Program by ID (GET)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/programs/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "programs",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Program (PUT)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"program_name\": \"Updated Name\",\n  \"is_active\": false\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/programs/{{program_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "programs",
+            "{{program_id}}"
+          ]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "// Set program_id variable if not set",
+              "if (!pm.variables.get('program_id')) { pm.variables.set('program_id', 1); }"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "description": "Update a program by ID. You can update either or both fields.\n\nExample bodies:\n- Both fields:\n{\n  \"program_name\": \"Updated Name\",\n  \"is_active\": false\n}\n- Only name:\n{\n  \"program_name\": \"Only Name\"\n}\n- Only status:\n{\n  \"is_active\": true\n}"
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "program_id",
+      "value": "1"
+    }
+  ]
+} 

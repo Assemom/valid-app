@@ -112,4 +112,21 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// DELETE /api/programs/:id
+router.delete('/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  if (!isPositiveInt(id)) {
+    return res.status(400).json({ status: 'error', message: 'Invalid id: must be a positive integer.' });
+  }
+  try {
+    const [result] = await db.execute('DELETE FROM programs WHERE id = ?', [id]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ status: 'error', message: 'Program not found' });
+    }
+    return res.json({ status: 'success', data: { id } });
+  } catch (err) {
+    return res.status(500).json({ status: 'error', message: 'Database error: ' + err.message });
+  }
+});
+
 module.exports = router; 
